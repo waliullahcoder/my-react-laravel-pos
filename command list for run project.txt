@@ -1,0 +1,70 @@
+user@example.com / superadmin@example.com
+secret
+
+
+
+{
+	"error": true,
+	"message": "Secret is not set.",
+	"data": {
+		"exception_message": "Secret is not set.",
+		"exception_code": 0,
+		"exception_line": 244,
+		"exception_file": "E:\\laragon-6.0.0\\www\\react-laravel-pos\\pos-laravel-backend\\vendor\\tymon\\jwt-auth\\src\\Providers\\JWT\\Lcobucci.php"
+	}
+}
+
+Sol:
+
+The error message "Secret is not set." suggests that the JWT (JSON Web Token) secret key required for generating and validating tokens is not configured in your Laravel application.
+To resolve this issue, follow these steps:
+1. Set JWT Secret Key
+
+You need to set the JWT secret key in the .env file. In your .env file, add or modify the following line:
+
+env
+
+JWT_SECRET=your_secret_key_here
+
+To generate a new secret key, you can run the following Artisan command:
+
+bash
+
+php artisan jwt:secret
+
+This command will generate a secret key and automatically add it to the .env file like this:
+
+env
+
+JWT_SECRET=generated_secret_key
+
+2. Clear Config Cache
+
+After setting the secret key, make sure to clear your config cache to ensure the changes in the .env file are applied:
+
+bash
+
+php artisan config:clear
+
+3. Verify JWT Package Installation
+
+Ensure that you have properly installed the tymon/jwt-auth package by running the following command:
+
+bash
+
+composer require tymon/jwt-auth
+
+Then, publish the configuration file using:
+
+bash
+
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+
+This will create a config/jwt.php configuration file where you can further customize the JWT settings if needed.
+4. Check for Any Custom Configuration
+
+If you have made any customizations related to JWT in your application (e.g., in Lcobucci.php), make sure that the secret is properly referenced wherever it's required.
+
+After these steps, the error regarding the missing secret should be resolved.
+
+Let me know if the issue persists or if you need further assistance!

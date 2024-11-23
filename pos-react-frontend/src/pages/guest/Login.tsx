@@ -30,10 +30,15 @@ const Login = () => {
   const { rootStore: { authStore}} = useStore();
 
   const isAuthenticated = authStore.isAuthenticated;
+  const isSuperAdminAuthenticated = authStore.isSuperAdminAuthenticated;
  
-  if (isAuthenticated) {
+  if (isAuthenticated && !isSuperAdminAuthenticated) {
+    return <Navigate to="/dashboard/orders/create" />;
+  }
+  if (isAuthenticated && isSuperAdminAuthenticated) {
     return <Navigate to="/dashboard/customers" />;
   }
+
 
   const onSubmit = async (data: any) => {
     try{
